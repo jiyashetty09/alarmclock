@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <h1> Alarm Clock</h1> 
+ <label for="timeinput">set alarm in (24hrs format)</label>
+ <h1><input type="time" id="timeinput" > </h1>
+ <button id="btn1" onclick="setalarm()">Set Alarm</button>
+ <button id="dltBtn" onclick="deletealarm()">Cancel Alarm</button>
+ <p id="alarmsettext"></p>
+ <audio id="alarmsound" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" preload="auto"></audio>
+</body>
+<script>
+    let alarmset=false;
+    let alarmtime="";
+    function setalarm(){
+    
+     alarmtime=document.getElementById("timeinput").value;
+    if(alarmtime){
+     document.getElementById("alarmsettext").textContent="alarm set (in 24hrs format):- "+alarmtime;
+     alarmset=true;
+    }
+}
+
+   function deletealarm()
+   {
+    alarmset=false;
+    document.getElementById("alarmsettext").textContent="alarm cancelled"
+    stopSound();
+   }
+   function playsound(){
+    document.getElementById("alarmsound").play();
+   }
+   function stopSound(){
+    document.getElementById("alarmsound").pause();
+   }
+setInterval(()=>{
+    if (alarmset){
+        const now= new Date();
+        const currentTime=now.toTimeString().slice(0,5);
+        if(currentTime===alarmtime){
+            playsound();
+            alert("wakup u silly its already "+currentTime);
+            alarmset=false;
+            document.getElementById("alarmsettext").textContent="alarmsuccessfull";
+        }
+
+    }
+},1000)
+</script>
+</html>
